@@ -1,2 +1,5 @@
-
 ocr-text-detector/test.ipynb
+backend/app/__pycache__/
+backend/app/results/
+backend/app/uploads/
+frontend/node_modules/
