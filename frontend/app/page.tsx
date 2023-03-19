@@ -1,8 +1,22 @@
+'use client';
 import '../styles/globals.css'
-import React from "react";
+import React, { useState } from "react";
+import FileUpload from '../components/fileUpload';
+import FilePreview from '../components/filePreview';
+import { FileContext } from '../app/context';
+
 
 function Home() {
-  return <div className='text-red-500'>Home</div>;
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+
+    return (
+        <div className="container mx-auto">
+            <FileContext.Provider value={{previewUrl,setPreviewUrl}}>
+                <FileUpload />
+                <FilePreview />
+            </FileContext.Provider>
+        </div>
+    );
 }
 
 
