@@ -3,3 +3,7 @@ backend/app/__pycache__/
 backend/app/results/
 backend/app/uploads/
 frontend/node_modules/
+backend/__pycache__/
+backend/internal/__pycache__/
+backend/routers/__pycache__/
+backend/__pycache__/
