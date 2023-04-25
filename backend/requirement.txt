@@ -1,0 +1,12 @@
+numpy
+fastapi
+uvicorn
+gunicorn==19.9.0
+pathlib
+pytesseract
+import pytesseract
+shutil
+PIL
+easyocr
+cv2
+matplotlib
