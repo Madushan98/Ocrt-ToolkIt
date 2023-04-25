@@ -6,15 +6,19 @@ import shutil
 import os
 import PIL
 from PIL import Image
-import pytesseract
 from pytesseract import Output
 import easyocr
 import cv2
 from internal.ocr_process import easyOcr_reader, easyOcr_text_only
+from routers import preprocess
+
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 app = FastAPI()
+
+app.include_router(preprocess.router)
+
 uploaded_path = "uploads"
 result_path = "results"
 
