@@ -10,6 +10,8 @@ import requests  # Make a request to a web page, and print the response text
 import matplotlib.pyplot as plt
 import easyocr  # OCR engine.
 from PIL import Image, ImageDraw, ImageFont
+import pytesseract
+from PIL import Image
 
 
 def easyOcr_reader(image_path):
@@ -77,3 +79,9 @@ def easyOcr_text_only(image_path):
         result += r[1]
 
     return result
+
+
+def pytessaract_text(image_path):
+    image = Image.open(image_path)
+    text = pytesseract.image_to_string(image, lang='eng')
+    return text

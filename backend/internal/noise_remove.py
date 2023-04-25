@@ -47,7 +47,7 @@ def nosie_remove(image):
     image = cv2.medianBlur(image, 3)
     return image
 
-def noise_remove_total(imge_path,th1=210, th2=230,save_path="results/result.jpg"):
+def noise_remove_total(imge_path,save_path,th1=210, th2=230):
     img = cv2.imread(imge_path)
     img = grey_scale(img)
     img = binarize_image(img, th1, th2)
