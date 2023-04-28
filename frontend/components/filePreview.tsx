@@ -74,7 +74,7 @@ const FilePreview = () => {
         const result = await fetch('http://localhost:8000/get-result', options)
                         .then((response) => response.json())
                         
-        setTextAreaResult(result.EasyOcr)
+        setTextAreaResult(result.Tesseract)
 
     }
 
@@ -109,7 +109,7 @@ const FilePreview = () => {
                 <div className="w-1/2 p-4">
                 {option == 'get-result'?
                     (
-                        <textarea value={textAreResult} readOnly className='w-full h-full rounded-lg p-1'>
+                        <textarea value={textAreResult} readOnly className='w-full h-full rounded-lg p-1 text-justify'>
                         </textarea>
                     ):
                     (

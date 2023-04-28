@@ -63,6 +63,7 @@ async def getResult(file: UploadFile = File(...)):
 
     # output from tesseract and easyocr
     op_easyocr = easyOcr_text_only(filename)
+    op_tesseract = pytesseract.image_to_string(filename)
 
     # # Getting bounding boxes from easyocr
     # cord_ocr = op_easyocr[-1][0]
@@ -86,6 +87,7 @@ async def getResult(file: UploadFile = File(...)):
     # cv2.imwrite('result/tesseract.png', img_tesseract)
 
     return {
+        "Tesseract": op_tesseract,
         "EasyOcr": op_easyocr
     }
 
