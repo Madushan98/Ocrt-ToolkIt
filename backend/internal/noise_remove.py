@@ -1,9 +1,10 @@
+
 import cv2
 from matplotlib import pyplot as plt
 import numpy as np
 import pytesseract
 from PIL import Image
-
+import base64
 
 
 def display(im_path):
@@ -53,4 +54,5 @@ def noise_remove_total(imge_path,save_path,th1=210, th2=230):
     img = binarize_image(img, th1, th2)
     img = nosie_remove(img)
     cv2.imwrite(save_path, img)
-    return img
+    
+    return save_path
