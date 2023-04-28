@@ -11,7 +11,7 @@ const FilePreview = () => {
     const [selectimage, setSelectImage] = useState<File|null>(null)
     const [isDragging, setIsDragging] = useState(false);
     const [option, setOption] = useState<string>("option1");
-    const [textAreResult,setTextAreaResult] = useState<string>("asdasd");
+    const [textAreResult,setTextAreaResult] = useState<string>("");
 
     const handleHover = () => {
         setHovered(true)
@@ -62,7 +62,6 @@ const FilePreview = () => {
     }
 
     const apiCall= async ()=>{
-        console.log("call")
         if(!selectimage)return;   
         const formData = new FormData();
         const boundary = Math.random().toString().slice(2);
