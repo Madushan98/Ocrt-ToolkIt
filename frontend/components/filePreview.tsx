@@ -5,6 +5,7 @@ import FileUpload from './fileUpload'
 import Modal from './Modal'
 import Spinner from './Spinner'
 import CloseButton from './CloseButton'
+import { getDataService } from '../services/ApiService'
 
 
 const FilePreview = () => {
@@ -16,6 +17,7 @@ const FilePreview = () => {
     const [option, setOption] = useState<string>("get-result");
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
+    const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
 
     const handleHover = () => {
         setHovered(true);
@@ -63,21 +65,37 @@ const FilePreview = () => {
         setOption(value);
     };
 
+    const handlePreProcessImage = async (imageUrl:string)=>{
+        setPreProcessImageUrl(imageUrl);
+    }
+
+    // const apiCall= async ()=>{
+    //     if(!selectimage)return; 
+    //     setIsUploading(true);  
+    //     const formData = new FormData();
+    //     formData.append('file', selectimage);
+    //     const options = {
+    //                         method: 'POST',
+    //                         body: formData,
+    //                     };
+
+    //     const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}get-result`, options)
+    //                     .then((response) => response.json());
+    //     setIsUploading(false);            
+    //     setTextAreaResult(result.Tesseract);
+    // };
+
     const apiCall= async ()=>{
         if(!selectimage)return; 
-        setIsUploading(true);  
-        const formData = new FormData();
-        formData.append('file', selectimage);
-        const options = {
-                            method: 'POST',
-                            body: formData,
-                        };
-
-        const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-result`, options)
-                        .then((response) => response.json());
-        setIsUploading(false);            
-        setTextAreaResult(result.Tesseract);
-    };
+        setIsUploading(true); 
+        const result = await getDataService(option,selectimage);
+        if(option === "get-result"){
+            setTextAreaResult(result.Tesseract);
+        }else{
+            handlePreProcessImage(result.url);
+        }
+        setIsUploading(false);     
+    }
     
     const resetImage = ()=>{
         console.log("asd")
@@ -127,11 +145,11 @@ const FilePreview = () => {
                         </textarea>
                     ):
                     (
-                        fileContext?.previewUrl ? (
+                        preProcessImageUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 className="object-cover"
-                                src={fileContext?.previewUrl}
+                                src={preProcessImageUrl}
                                 alt="File Preview"
                             />
                         ) : (
