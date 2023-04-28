@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from 'react'
 import { FileContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
+import Spinner from './Spinner'
 
 
 const FilePreview = () => {
@@ -13,6 +14,7 @@ const FilePreview = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [option, setOption] = useState<string>("get-result");
     const [textAreResult,setTextAreaResult] = useState<string>("");
+    const [isUploading,setIsUploading] = useState<boolean>(false);
 
     const handleHover = () => {
         setHovered(true)
@@ -63,7 +65,8 @@ const FilePreview = () => {
     }
 
     const apiCall= async ()=>{
-        if(!selectimage)return;   
+        if(!selectimage)return; 
+        setIsUploading(true);  
         const formData = new FormData();
         const boundary = Math.random().toString().slice(2);
         formData.append('file', selectimage);
@@ -74,7 +77,7 @@ const FilePreview = () => {
 
         const result = await fetch('http://localhost:8000/get-result', options)
                         .then((response) => response.json())
-                        
+        setIsUploading(false);            
         setTextAreaResult(result.Tesseract)
 
     } 
@@ -132,9 +135,11 @@ const FilePreview = () => {
             </div>
 
         </div>
-        <Modal>
-                <h1>asdasdasd</h1>
-        </Modal>
+        {isUploading &&
+            <Modal>
+                <Spinner></Spinner>
+            </Modal>
+        }
         </>
     )
 }
