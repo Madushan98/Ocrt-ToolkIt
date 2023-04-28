@@ -2,6 +2,7 @@
 import { useState, useContext, useEffect } from 'react'
 import { FileContext } from '../app/context'
 import FileUpload from './fileUpload'
+import Modal from './Modal'
 
 
 const FilePreview = () => {
@@ -76,7 +77,7 @@ const FilePreview = () => {
                         
         setTextAreaResult(result.Tesseract)
 
-    }
+    } 
 
     return (
         <>
@@ -113,15 +114,27 @@ const FilePreview = () => {
                         </textarea>
                     ):
                     (
-                        <div className="h-48 w-full bg-gray-100 flex justify-center items-center focus:border-transparent">
-                            <span className="text-gray-500">Upload File to Get Results</span>
-                        </div>
+                        fileContext?.previewUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                                className="object-cover"
+                                src={fileContext?.previewUrl}
+                                alt="File Preview"
+                            />
+                        ) : (
+                            <div className="h-48 w-full bg-gray-100 flex justify-center items-center">
+                                <span className="text-gray-500">Upload File to Get Results</span>
+                            </div>
+                        )
                     )
                 }
                 </div>
             </div>
 
         </div>
+        <Modal>
+                <h1>asdasdasd</h1>
+        </Modal>
         </>
     )
 }
@@ -129,15 +142,3 @@ const FilePreview = () => {
 
 export default FilePreview
 
-// {fileContext?.previewUrl ? (
-//     // eslint-disable-next-line @next/next/no-img-element
-//     <img
-//         className="object-cover"
-//         src={fileContext?.previewUrl}
-//         alt="File Preview"
-//     />
-// ) : (
-//     <div className="h-48 w-full bg-gray-100 flex justify-center items-center">
-//         <span className="text-gray-500">Upload File to Get Results</span>
-//     </div>
-// )}
