@@ -12,7 +12,6 @@ function Home() {
     return (
         <div className="container mx-auto">
             <FileContext.Provider value={{previewUrl,setPreviewUrl}}>
-                <FileUpload />
                 <FilePreview />
             </FileContext.Provider>
         </div>
