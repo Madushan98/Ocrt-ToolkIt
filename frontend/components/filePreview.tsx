@@ -10,7 +10,7 @@ const FilePreview = () => {
     const [hovered, setHovered] = useState(false)
     const [selectimage, setSelectImage] = useState<File|null>(null)
     const [isDragging, setIsDragging] = useState(false);
-    const [option, setOption] = useState<string>("option1");
+    const [option, setOption] = useState<string>("get-result");
     const [textAreResult,setTextAreaResult] = useState<string>("");
 
     const handleHover = () => {
