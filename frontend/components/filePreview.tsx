@@ -4,24 +4,25 @@ import { FileContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
 import Spinner from './Spinner'
+import CloseButton from './closeButton'
 
 
 const FilePreview = () => {
     const fileContext = useContext(FileContext)
-    const [selectedFile, setSelectedFile] =  useState<Blob | null>(null)
-    const [hovered, setHovered] = useState(false)
-    const [selectimage, setSelectImage] = useState<File|null>(null)
+    const [selectedFile, setSelectedFile] =  useState<Blob | null>(null);
+    const [hovered, setHovered] = useState(false);
+    const [selectimage, setSelectImage] = useState<File|null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [option, setOption] = useState<string>("get-result");
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
 
     const handleHover = () => {
-        setHovered(true)
+        setHovered(true);
     }
 
     const handleLeave = () => {
-        setHovered(false)
+        setHovered(false);
     }
    
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -40,35 +41,32 @@ const FilePreview = () => {
         const files = e.dataTransfer.files;
         if (files.length > 0) {
             const file = files[0];
-            setFile(file)
+            setFile(file);
             
         }
     };
 
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement> ) => {
-        const file = event.target.files?.[0]
+        const file = event.target.files?.[0];
         if (file) {
-            setFile(file)
-            setSelectImage(file)
+            setFile(file);
         }
-       
-      }
+    };
 
     const setFile=(file : File)=>{
         setSelectedFile(selectedFile);
-        console.log(URL.createObjectURL(file));
+        setSelectImage(file);
         fileContext?.setPreviewUrl(URL.createObjectURL(file));
-    }
+    };
 
     const handleOptionSelect=(value:string)=>{
         setOption(value);
-    }
+    };
 
     const apiCall= async ()=>{
         if(!selectimage)return; 
         setIsUploading(true);  
         const formData = new FormData();
-        const boundary = Math.random().toString().slice(2);
         formData.append('file', selectimage);
         const options = {
                             method: 'POST',
@@ -76,11 +74,18 @@ const FilePreview = () => {
                         };
 
         const result = await fetch('http://localhost:8000/get-result', options)
-                        .then((response) => response.json())
+                        .then((response) => response.json());
         setIsUploading(false);            
-        setTextAreaResult(result.Tesseract)
-
-    } 
+        setTextAreaResult(result.Tesseract);
+    };
+    
+    const resetImage = ()=>{
+        console.log("asd")
+        setTextAreaResult("");
+        setSelectImage(null);
+        setSelectedFile(null);
+        fileContext?.setPreviewUrl(null);
+    }
 
     return (
         <>
@@ -91,14 +96,19 @@ const FilePreview = () => {
             onMouseLeave={handleLeave}
         >
             <div className="flex bg-gray-100 rounded-lg">
-                <div  className="w-1/2  border-r p-4">
+                <div  className="relative w-1/2  border-r p-4">
                     {fileContext?.previewUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                            className="object-cover"
-                            src={fileContext?.previewUrl}
-                            alt="File Preview"
-                        />
+                        
+                        <>
+                            <img
+                                className="relative object-cover"
+                                src={fileContext?.previewUrl}
+                                alt="File Preview"
+                            />
+                        <div className='absolute top-6 right-6'>
+                        <CloseButton closeClick={()=>resetImage()}></CloseButton>
+                        </div>
+                        </>
                     ) : (
                         <div 
                         onDragOver={handleDragOver}
