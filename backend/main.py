@@ -1,21 +1,25 @@
 from fastapi import Depends, FastAPI, File, UploadFile
-from pydantic import BaseModel
 import pytesseract
-from pytesseract import Output
 import shutil
 import os
-import PIL
-from PIL import Image
-from pytesseract import Output
-import easyocr
-import cv2
 from internal.ocr_process import easyOcr_reader, easyOcr_text_only
 from routers import preprocess
+from fastapi.middleware.cors import CORSMiddleware
+
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 app = FastAPI()
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(preprocess.router)
 
@@ -58,8 +62,8 @@ async def getResult(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, f)
 
     # output from tesseract and easyocr
-    op_tesseract = pytesseract.image_to_string(filename)
     op_easyocr = easyOcr_text_only(filename)
+    op_tesseract = pytesseract.image_to_string(filename)
 
     # # Getting bounding boxes from easyocr
     # cord_ocr = op_easyocr[-1][0]

@@ -1,39 +1,40 @@
 'use client';
 import { url } from 'inspector';
-import { useState, createContext, useContext } from 'react'
+import { useState, createContext, useContext, useEffect } from 'react'
 import FilePreview from './filePreview';
 import { FileContext } from '../app/context';
+import { OptionType, uploadeChanger } from '../model/model';
 
-const FileUpload = () => {
-  const [selectedFile, setSelectedFile] =  useState<Blob | null>(null)
+const FileUpload = ({onOptionChange,onUpload}:uploadeChanger) => {
   const fileContext = useContext(FileContext)
+  const [selectedOption, setSelectedOption] = useState<string >("get-result");
 
-  const handleFileInput = (event: React.ChangeEvent<HTMLInputElement> ) => {
-    const selectedFile = event.target.files?.[0]
-    if (selectedFile) {
-        setSelectedFile(selectedFile)
-        console.log(URL.createObjectURL(selectedFile))
-        fileContext?.setPreviewUrl(URL.createObjectURL(selectedFile))
-    }
-   
-  }
+  useEffect(() => {
+    onOptionChange(selectedOption);
+  },[selectedOption]);
 
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(e.target.value);
+  };
   const handleUpload = () => {
-    // TODO: Implement file upload logic
+    onUpload()
   }
 
   return (
     <div className="max-w-sm mx-auto mt-6 bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="md:flex">
-        <div className="p-8">
-          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            Select a file
+        <div className="p-8 flex w-full justify-between items-end">
+          <div className='flex-col w-4/5 '>
+            <label className='tracking-wide text-sm text-indigo-500 font-semibold' htmlFor="">Choose your option</label>
+              <select onChange={handleSelect} className="border-2 rounded-md p-2 w-full">
+                <option value="get-result">Image To Text</option>
+                <option value="option2">Noice Remover</option>
+                <option value="option3">Option 3</option>
+              </select>
           </div>
-          <input type="file" onChange={handleFileInput} />
           <button
-            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 mt-4 rounded"
+            className="bg-indigo-500 h-11 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
             onClick={handleUpload}
-            disabled={!selectedFile}
           >
             Upload
           </button>
