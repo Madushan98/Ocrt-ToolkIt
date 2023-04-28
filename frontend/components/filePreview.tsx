@@ -4,7 +4,7 @@ import { FileContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
 import Spinner from './Spinner'
-import CloseButton from './closeButton'
+import CloseButton from './CloseButton'
 
 
 const FilePreview = () => {
@@ -73,7 +73,7 @@ const FilePreview = () => {
                             body: formData,
                         };
 
-        const result = await fetch('http://localhost:8000/get-result', options)
+        const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-result`, options)
                         .then((response) => response.json());
         setIsUploading(false);            
         setTextAreaResult(result.Tesseract);
