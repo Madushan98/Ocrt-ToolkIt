@@ -4,8 +4,7 @@ uvicorn
 gunicorn==19.9.0
 pathlib
 pytesseract
-import pytesseract
-shutil
+pytest-shutil
 PIL
 easyocr
 cv2
