@@ -6,6 +6,7 @@ import Modal from './Modal'
 import Spinner from './Spinner'
 import CloseButton from './CloseButton'
 import { getDataService } from '../services/ApiService'
+import { Options } from '../enums/enums'
 
 
 const FilePreview = () => {
@@ -14,7 +15,7 @@ const FilePreview = () => {
     const [hovered, setHovered] = useState(false);
     const [selectimage, setSelectImage] = useState<File|null>(null);
     const [isDragging, setIsDragging] = useState(false);
-    const [option, setOption] = useState<string>("get-result");
+    const [option, setOption] = useState<Options>(Options.get_result);
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
     const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
@@ -61,7 +62,7 @@ const FilePreview = () => {
         fileContext?.setPreviewUrl(URL.createObjectURL(file));
     };
 
-    const handleOptionSelect=(value:string)=>{
+    const handleOptionSelect=(value:Options)=>{
         setOption(value);
     };
 
@@ -89,7 +90,7 @@ const FilePreview = () => {
         if(!selectimage)return; 
         setIsUploading(true); 
         const result = await getDataService(option,selectimage);
-        if(option === "get-result"){
+        if(option === Options.get_result){
             setTextAreaResult(result.Tesseract);
         }else{
             handlePreProcessImage(result.url);

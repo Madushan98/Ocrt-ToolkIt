@@ -1,12 +1,13 @@
+import { Options } from "../enums/enums";
 import { PreProcessDataResult } from "../types/result";
 
     
-    export const getDataService = async (option:string, image:File)=>{
+    export const getDataService = async (option:Options, image:File)=>{
         const result = await getService(image,option);
         return result;
     }
     
-    export const uploadDataService = async (option:string, image:File)=>{
+    export const uploadDataService = async (option:Options, image:File)=>{
         const endpoint = getEndpoint(option);
         const formData = new FormData();
         formData.append('file', image);
@@ -21,18 +22,18 @@ import { PreProcessDataResult } from "../types/result";
     };
 
 
-    export const preProcessDataService = async (option:string): Promise<PreProcessDataResult>=>{
+    export const preProcessDataService = async (option:Options): Promise<PreProcessDataResult>=>{
         const endpoint = getEndpoint(option);
         const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`)
                         .then((response) => response.json()) as PreProcessDataResult;
         return result;
     }
 
-    const getService = (image: any,option: string) => {
+    const getService = (image: any,option: Options) => {
         switch(option){
-            case "get-result":
+            case Options.get_result:
                 return uploadDataService(option,image);
-            case "option2":
+            case Options.noise_remove:
                 return preProcessDataService(option);
             case "upload":
                 return uploadDataService(option,image);
@@ -42,13 +43,13 @@ import { PreProcessDataResult } from "../types/result";
     }
 
 
-    const getEndpoint = (option:string)=>{
+    const getEndpoint = (option:Options)=>{
         switch(option){
-            case "get-result":
+            case Options.get_result:
                 return "get-result";
-            case "option2":
+            case Options.noise_remove:
                 return "pre-process/noise-remove";
-            case "upload":
+            case Options.upload:
                 return "upload";
             default:
                 return "get-result";
