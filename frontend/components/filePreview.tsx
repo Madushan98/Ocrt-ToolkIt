@@ -1,5 +1,5 @@
 'use client'
-import { useState, useContext, useEffect, useRef } from 'react'
+import { useState, useContext} from 'react'
 import { FileContext, ThresholdContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
@@ -7,8 +7,9 @@ import Spinner from './Spinner'
 import CloseButton from './CloseButton'
 import { fetchFile, getDataService } from '../services/ApiService'
 import { Options } from '../enums/enums'
-import { Console } from 'console'
 import NextStepButton from './NextStepButton'
+import jsPDF from 'jspdf'
+import TextPreview from './TextPreview'
 
 
 const FilePreview = () => {
@@ -22,7 +23,7 @@ const FilePreview = () => {
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
     const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
-    const textareaRef = useRef<HTMLTextAreaElement>(null)
+ 
 
 
     const handleHover = () => {
@@ -129,10 +130,10 @@ const FilePreview = () => {
 
     // const downloadPDF = () => {
     //     if (textareaRef.current) {
-    //       const doc = new (window as any).jsPDF()
-    //       doc.text(textareaRef.current.value, 10, 10)
-    //       doc.save('textarea.pdf')
-    //     }
+    //         const pdf = new jsPDF()
+    //           pdf.text(textAreResult,20, 20, {align:'left'} );
+    //           pdf.save('textarea.pdf')
+    //       }
     //   }
     
 
@@ -173,11 +174,7 @@ const FilePreview = () => {
                 {option == 'get-result'?
                     (
                         <>
-                            <textarea ref={textareaRef} value={textAreResult} readOnly className='relative w-full h-full rounded-lg p-1 text-justify'>
-                            </textarea>
-                            <div className='absolute top-6 right-6'>
-                                <CloseButton closeClick={()=>downloadPDF()}></CloseButton>
-                            </div>
+                            <TextPreview textAreaResult={textAreResult}/>
                         </>
                         
                     ):

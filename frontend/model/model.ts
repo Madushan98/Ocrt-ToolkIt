@@ -18,3 +18,8 @@ export interface nextButton{
     nextOnClick:()=>void
 }
 
+export interface TextArea{
+    textAreaResult : string
+}
+
+
