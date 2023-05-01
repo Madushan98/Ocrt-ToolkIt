@@ -29,9 +29,9 @@ const FileUpload = ({onOptionChange,onUpload}:uploadeChanger) => {
           <div className='flex-col w-4/5 '>
             <label className='tracking-wide text-sm text-indigo-500 font-semibold' htmlFor="">Choose your option</label>
               <select onChange={handleSelect} className="border-2 rounded-md p-2 w-full">
-                <option value={Options.get_result}>Image To Text</option>
-                <option value={Options.noise_remove}>Noise Remover</option>
-                <option value={Options.upload}>Upload</option>
+                 {Object.values(Options).map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                  ))}
               </select>
           </div>
           <button
