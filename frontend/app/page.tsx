@@ -3,18 +3,22 @@ import '../styles/globals.css'
 import React, { useState } from "react";
 import FileUpload from '../components/fileUpload';
 import FilePreview from '../components/filePreview';
-import { FileContext } from '../app/context';
+import { FileContext, ThresholdContext } from '../app/context';
 
 
 function Home() {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+    const [th1, setTh1] = useState<number | null>(0);
+    const [th2, setTh2] = useState<number | null>(255);
 
     return (
         <div className="container mx-auto">
-            <FileContext.Provider value={{previewUrl,setPreviewUrl}}>
-                <FilePreview />
+            <FileContext.Provider value={{ previewUrl, setPreviewUrl }}>
+                <ThresholdContext.Provider value={{ th1, th2, setTh1, setTh2 }}>
+                    <FilePreview />
+                </ThresholdContext.Provider>
             </FileContext.Provider>
-        </div>
+        </div >
     );
 }
 
