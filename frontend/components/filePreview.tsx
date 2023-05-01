@@ -112,8 +112,10 @@ const FilePreview = () => {
         data.set('th2', thresholdContext?.th2 || 220);
     
         const result = await getDataService(option,selectimage,data);
+        console.log(option);
         if(option === Options.get_result){
             setTextAreaResult(result.Tesseract);
+            console.log("asdasd"+option);
         }else{
             handlePreProcessImage(result.url);
         }
@@ -126,14 +128,6 @@ const FilePreview = () => {
         setSelectedFile(null);
         fileContext?.setPreviewUrl(null);
     }
-
-    // const downloadPDF = () => {
-    //     if (textareaRef.current) {
-    //         const pdf = new jsPDF()
-    //           pdf.text(textAreResult,20, 20, {align:'left'} );
-    //           pdf.save('textarea.pdf')
-    //       }
-    //   }
     
 
     return (
@@ -172,10 +166,7 @@ const FilePreview = () => {
                 <div className="w-1/2 p-4">
                 {option == 'get-result'?
                     (
-                        <>
-                            <TextPreview textAreaResult={textAreResult}/>
-                        </>
-                        
+                        <TextPreview textAreaResult={textAreResult}/> 
                     ):
                     (
                         preProcessImageUrl ? (
@@ -185,9 +176,9 @@ const FilePreview = () => {
                                 className="relative object-cover"
                                 src={preProcessImageUrl}
                                 alt="File Preview"
-                            />
+                                />
                                 <div className='absolute top-6 right-6'>
-                                    <ActionButton nextOnClick={()=>swapImgae()}></ActionButton>
+                                    <ActionButton title='Next Step' rotate='0' nextOnClick={()=>swapImgae()}></ActionButton>
                                 </div>
                             </>
                             

@@ -20,7 +20,7 @@ export default function TextPreview({textAreaResult}:TextArea) {
             <textarea value={textAreaResult} readOnly className='relative w-full h-full rounded-lg p-1 text-justify'>
             </textarea>
             <div className='absolute top-6 right-6'>
-                <ActionButton rotate='90' nextOnClick={()=>downloadPDF()}></ActionButton>
+                <ActionButton title='Download PDF' rotate='90' nextOnClick={()=>downloadPDF()}></ActionButton>
             </div>
         </>
   )
