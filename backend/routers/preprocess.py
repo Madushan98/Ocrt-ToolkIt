@@ -20,12 +20,12 @@ save_path = os.path.join(os.path.dirname(os.getcwd()),
                          resultPath, "")
 
 
-@router.get("/pre-process/noise-remove")
-async def removeNoise():
+@router.get("/pre-process/noise-remove/{th1}/{th2}")
+async def removeNoise(th1: int, th2: int):
     save_path = os.path.join(os.path.dirname(
-        os.getcwd()), resultPath, "noise-remove.png")
-    noise_remove_total(file_path, save_path, th1=210, th2=230)
-    url = f"http://localhost:8000/static/results/noise-remove.png"
+        os.getcwd()), resultPath, f"noise-remove{th1}{th2}.png")
+    noise_remove_total(file_path, save_path, th1=th1, th2=th2)
+    url = f"http://localhost:8000/static/results/noise-remove{th1}{th2}.png"
 
     # Return a JSON response with the image URL
     return JSONResponse({"url": url})
