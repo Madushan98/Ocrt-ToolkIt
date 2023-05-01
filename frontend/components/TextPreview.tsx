@@ -5,7 +5,7 @@ import jsPDF from 'jspdf'
 import ActionButton from './ActionButton'
 
 export default function TextPreview({textAreaResult}:TextArea) {
-
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
 
     const downloadPDF = () => {
         if (textAreaResult) {
@@ -17,10 +17,10 @@ export default function TextPreview({textAreaResult}:TextArea) {
 
   return (
         <>
-            <textarea value={textAreaResult} readOnly className='relative w-full h-full rounded-lg p-1 text-justify'>
+            <textarea ref={textareaRef} value={textAreaResult} readOnly className='relative w-full h-full rounded-lg p-1 text-justify'>
             </textarea>
             <div className='absolute top-6 right-6'>
-                <ActionButton title='Download PDF' rotate='90' nextOnClick={()=>downloadPDF()}></ActionButton>
+                {textAreaResult && <ActionButton title='Download PDF' rotate='90' nextOnClick={()=>downloadPDF()}></ActionButton>}
             </div>
         </>
   )
