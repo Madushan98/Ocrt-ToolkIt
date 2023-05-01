@@ -1,6 +1,6 @@
 'use client'
 import { useState, useContext, useEffect } from 'react'
-import { FileContext } from '../app/context'
+import { FileContext, ThresholdContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
 import Spinner from './Spinner'
@@ -12,6 +12,7 @@ import { Console } from 'console'
 
 const FilePreview = () => {
     const fileContext = useContext(FileContext)
+    const thresholdContext = useContext(ThresholdContext)
     const [selectedFile, setSelectedFile] =  useState<Blob | null>(null);
     const [hovered, setHovered] = useState(false);
     const [selectimage, setSelectImage] = useState<File|null>(null);
@@ -20,6 +21,7 @@ const FilePreview = () => {
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
     const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
+    
 
     const handleHover = () => {
         setHovered(true);
@@ -68,30 +70,18 @@ const FilePreview = () => {
     };
 
     const handlePreProcessImage = async (imageUrl:string)=>{
-        console.log(imageUrl);
         setPreProcessImageUrl(imageUrl);
     }
 
-    // const apiCall= async ()=>{
-    //     if(!selectimage)return; 
-    //     setIsUploading(true);  
-    //     const formData = new FormData();
-    //     formData.append('file', selectimage);
-    //     const options = {
-    //                         method: 'POST',
-    //                         body: formData,
-    //                     };
-
-    //     const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}get-result`, options)
-    //                     .then((response) => response.json());
-    //     setIsUploading(false);            
-    //     setTextAreaResult(result.Tesseract);
-    // };
-
     const apiCall= async ()=>{
         if(!selectimage)return; 
-        setIsUploading(true); 
-        const result = await getDataService(option,selectimage);
+        setIsUploading(true);
+        var data: Map<string,number> = new Map(); 
+        thresholdContext?.setTh1(250);
+        data.set('th1', thresholdContext?.th1 || 220);
+        data.set('th2', thresholdContext?.th2 || 220);
+    
+        const result = await getDataService(option,selectimage,data);
         if(option === Options.get_result){
             setTextAreaResult(result.Tesseract);
         }else{
@@ -101,7 +91,6 @@ const FilePreview = () => {
     }
     
     const resetImage = ()=>{
-        console.log("asd")
         setTextAreaResult("");
         setSelectImage(null);
         setSelectedFile(null);
