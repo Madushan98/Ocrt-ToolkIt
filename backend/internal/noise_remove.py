@@ -1,4 +1,3 @@
-
 import cv2
 from matplotlib import pyplot as plt
 import numpy as np
@@ -48,11 +47,18 @@ def nosie_remove(image):
     image = cv2.medianBlur(image, 3)
     return image
 
-def noise_remove_total(imge_path,save_path,th1=210, th2=230):
+def noise_remove_img_array(imge_path, save_path, th1=210, th2=230):
+    img = cv2.imread(imge_path)
+    img = grey_scale(img)
+    img = binarize_image(img, th1, th2)
+    img = nosie_remove(img)
+    return img
+
+def noise_remove_total(imge_path, save_path, th1=210, th2=230):
     img = cv2.imread(imge_path)
     img = grey_scale(img)
     img = binarize_image(img, th1, th2)
     img = nosie_remove(img)
     cv2.imwrite(save_path, img)
-    
+
     return save_path
