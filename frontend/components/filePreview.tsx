@@ -7,6 +7,7 @@ import Spinner from './Spinner'
 import CloseButton from './CloseButton'
 import { getDataService } from '../services/ApiService'
 import { Options } from '../enums/enums'
+import { Console } from 'console'
 
 
 const FilePreview = () => {
@@ -67,6 +68,7 @@ const FilePreview = () => {
     };
 
     const handlePreProcessImage = async (imageUrl:string)=>{
+        console.log(imageUrl);
         setPreProcessImageUrl(imageUrl);
     }
 

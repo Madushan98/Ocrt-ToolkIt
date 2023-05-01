@@ -35,6 +35,10 @@ import { PreProcessDataResult } from "../types/result";
                 return uploadDataService(option,image);
             case Options.noise_remove:
                 return preProcessDataService(option);
+            case Options.dilation:
+                return preProcessDataService(option);
+            case Options.erosion:
+                return preProcessDataService(option);
             case "upload":
                 return uploadDataService(option,image);
             default:
@@ -51,6 +55,10 @@ import { PreProcessDataResult } from "../types/result";
                 return "pre-process/noise-remove";
             case Options.upload:
                 return "upload";
+            case Options.dilation:
+                return "pre-process/dilation";
+            case Options.erosion:
+                return "pre-process/erosion";
             default:
                 return "get-result";
         }
