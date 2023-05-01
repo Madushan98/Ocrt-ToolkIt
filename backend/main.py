@@ -27,7 +27,7 @@ app.add_middleware(
 
 app.include_router(preprocess.router)
 
-uploaded_path = "uploads"
+uploaded_path = "static/uploads/"
 result_path = "results"
 
 # New folder to save ocr images
@@ -61,7 +61,9 @@ async def getResult(file: UploadFile = File(...)):
         pass
     else:
         os.mkdir(uploaded_path)
-    filename = f"uploads/{file.filename}"
+    
+    filename = f"{uploaded_path}/page1.png"
+
     with open(filename, "wb") as f:
         shutil.copyfileobj(file.file, f)
 
