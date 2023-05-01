@@ -4,18 +4,20 @@ import { useState, createContext, useContext, useEffect } from 'react'
 import FilePreview from './filePreview';
 import { FileContext } from '../app/context';
 import { OptionType, uploadeChanger } from '../model/model';
+import { Options } from '../enums/enums';
 
 const FileUpload = ({onOptionChange,onUpload}:uploadeChanger) => {
   const fileContext = useContext(FileContext)
-  const [selectedOption, setSelectedOption] = useState<string >("get-result");
+  const [selectedOption, setSelectedOption] = useState<Options>(Options.get_result);
 
   useEffect(() => {
     onOptionChange(selectedOption);
   },[selectedOption]);
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(e.target.value);
+ const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value as Options);
   };
+
   const handleUpload = () => {
     onUpload()
   }
@@ -27,9 +29,9 @@ const FileUpload = ({onOptionChange,onUpload}:uploadeChanger) => {
           <div className='flex-col w-4/5 '>
             <label className='tracking-wide text-sm text-indigo-500 font-semibold' htmlFor="">Choose your option</label>
               <select onChange={handleSelect} className="border-2 rounded-md p-2 w-full">
-                <option value="get-result">Image To Text</option>
-                <option value="option2">Noice Remover</option>
-                <option value="option3">Option 3</option>
+                 {Object.values(Options).map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                  ))}
               </select>
           </div>
           <button
