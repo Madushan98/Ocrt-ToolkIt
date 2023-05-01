@@ -7,9 +7,8 @@ import Spinner from './Spinner'
 import CloseButton from './CloseButton'
 import { fetchFile, getDataService } from '../services/ApiService'
 import { Options } from '../enums/enums'
-import NextStepButton from './NextStepButton'
-import jsPDF from 'jspdf'
 import TextPreview from './TextPreview'
+import ActionButton from './ActionButton'
 
 
 const FilePreview = () => {
@@ -188,7 +187,7 @@ const FilePreview = () => {
                                 alt="File Preview"
                             />
                                 <div className='absolute top-6 right-6'>
-                                    <NextStepButton nextOnClick={()=>swapImgae()}></NextStepButton>
+                                    <ActionButton nextOnClick={()=>swapImgae()}></ActionButton>
                                 </div>
                             </>
                             

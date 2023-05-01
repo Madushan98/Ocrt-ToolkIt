@@ -16,6 +16,7 @@ export interface closeButton{
 
 export interface nextButton{
     nextOnClick:()=>void
+    rotate:string
 }
 
 export interface TextArea{

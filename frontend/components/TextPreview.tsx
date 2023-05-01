@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import CloseButton from './CloseButton'
 import { TextArea } from '../model/model'
 import jsPDF from 'jspdf'
+import ActionButton from './ActionButton'
 
 export default function TextPreview({textAreaResult}:TextArea) {
 
@@ -19,7 +20,7 @@ export default function TextPreview({textAreaResult}:TextArea) {
             <textarea value={textAreaResult} readOnly className='relative w-full h-full rounded-lg p-1 text-justify'>
             </textarea>
             <div className='absolute top-6 right-6'>
-                <CloseButton closeClick={()=>downloadPDF()}></CloseButton>
+                <ActionButton rotate='90' nextOnClick={()=>downloadPDF()}></ActionButton>
             </div>
         </>
   )
