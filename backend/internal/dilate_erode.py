@@ -1,4 +1,5 @@
-from noise_remove import noise_remove_total
+from fastapi import APIRouter
+from .noise_remove import noise_remove_total
 import cv2
 
 # apply erotion to images
