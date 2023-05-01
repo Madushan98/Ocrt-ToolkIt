@@ -24,8 +24,26 @@ These instructions will help you set up the OCR Based PDF Reader on your local m
 1. Clone the repository:
   
 2. Install the dependencies:
-
+run the requriment.txt file in the backend 
+``` 
+pip install requirment.txt 
+```
+install dependencies in frontend
+```
+npm install 
+```
 3. Run the application:
+- backend
+```
+uvicorn main:app --reload
+```
+- frontend 
+```
+    npm run dev
+    # or
+    yarn dev 
+```
+
 
 
 ## Contributing
