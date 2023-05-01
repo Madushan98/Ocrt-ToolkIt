@@ -13,3 +13,8 @@ export interface uploadeChanger{
 export interface closeButton{
     closeClick:()=>void
 }
+
+export interface nextButton{
+    nextOnClick:()=>void
+}
+

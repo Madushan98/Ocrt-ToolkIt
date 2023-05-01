@@ -1,13 +1,14 @@
 'use client'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import { FileContext, ThresholdContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
 import Spinner from './Spinner'
 import CloseButton from './CloseButton'
-import { getDataService } from '../services/ApiService'
+import { fetchFile, getDataService } from '../services/ApiService'
 import { Options } from '../enums/enums'
 import { Console } from 'console'
+import NextStepButton from './NextStepButton'
 
 
 const FilePreview = () => {
@@ -21,7 +22,8 @@ const FilePreview = () => {
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
     const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
-    
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
+
 
     const handleHover = () => {
         setHovered(true);
@@ -70,12 +72,40 @@ const FilePreview = () => {
     };
 
     const handlePreProcessImage = async (imageUrl:string)=>{
+        console.log(imageUrl);
         setPreProcessImageUrl(imageUrl);
     }
 
+    const swapImgae=async ()=>{
+        
+        if(preProcessImageUrl != null){
+            fetchFile(preProcessImageUrl).then(res=>setSelectImage(res));
+            resetImage();
+            fileContext?.setPreviewUrl(preProcessImageUrl);  
+        }
+        setPreProcessImageUrl(null);
+
+    }
+
+    // const apiCall= async ()=>{
+    //     if(!selectimage)return; 
+    //     setIsUploading(true);  
+    //     const formData = new FormData();
+    //     formData.append('file', selectimage);
+    //     const options = {
+    //                         method: 'POST',
+    //                         body: formData,
+    //                     };
+
+    //     const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}get-result`, options)
+    //                     .then((response) => response.json());
+    //     setIsUploading(false);            
+    //     setTextAreaResult(result.Tesseract);
+    // };
+
     const apiCall= async ()=>{
         if(!selectimage)return; 
-        setIsUploading(true);
+        setIsUploading(true); 
         var data: Map<string,number> = new Map(); 
         thresholdContext?.setTh1(250);
         data.set('th1', thresholdContext?.th1 || 220);
@@ -97,6 +127,15 @@ const FilePreview = () => {
         fileContext?.setPreviewUrl(null);
     }
 
+    // const downloadPDF = () => {
+    //     if (textareaRef.current) {
+    //       const doc = new (window as any).jsPDF()
+    //       doc.text(textareaRef.current.value, 10, 10)
+    //       doc.save('textarea.pdf')
+    //     }
+    //   }
+    
+
     return (
         <>
         <FileUpload onUpload={()=>apiCall()} onOptionChange={handleOptionSelect} />
@@ -116,7 +155,7 @@ const FilePreview = () => {
                                 alt="File Preview"
                             />
                         <div className='absolute top-6 right-6'>
-                        <CloseButton closeClick={()=>resetImage()}></CloseButton>
+                            <CloseButton closeClick={()=>resetImage()}></CloseButton>
                         </div>
                         </>
                     ) : (
@@ -133,17 +172,29 @@ const FilePreview = () => {
                 <div className="w-1/2 p-4">
                 {option == 'get-result'?
                     (
-                        <textarea value={textAreResult} readOnly className='w-full h-full rounded-lg p-1 text-justify'>
-                        </textarea>
+                        <>
+                            <textarea ref={textareaRef} value={textAreResult} readOnly className='relative w-full h-full rounded-lg p-1 text-justify'>
+                            </textarea>
+                            <div className='absolute top-6 right-6'>
+                                <CloseButton closeClick={()=>downloadPDF()}></CloseButton>
+                            </div>
+                        </>
+                        
                     ):
                     (
                         preProcessImageUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                                className="object-cover"
+                            <>
+                                <img
+                                className="relative object-cover"
                                 src={preProcessImageUrl}
                                 alt="File Preview"
                             />
+                                <div className='absolute top-6 right-6'>
+                                    <NextStepButton nextOnClick={()=>swapImgae()}></NextStepButton>
+                                </div>
+                            </>
+                            
                         ) : (
                             <div className="h-48 w-full bg-gray-100 flex justify-center items-center">
                                 <span className="text-gray-500">Upload File to Get Results</span>
