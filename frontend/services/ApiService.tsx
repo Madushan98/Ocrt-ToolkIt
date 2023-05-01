@@ -21,6 +21,14 @@ export const uploadDataService = async (option: Options, image: File) => {
     return result;
 };
 
+export const fetchFile=async (filePath:string)=>{
+    const result = await fetch(filePath)
+                .then((response) => response.blob())
+                .then((blob) => new File([blob], 'file.txt'));
+
+    return result;
+}
+
 export const preProcessDataService = async (option: Options, data: Map<string, number> | null = null): Promise<PreProcessDataResult> => {
     const endpoint = getEndpoint(option);
     let url = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;

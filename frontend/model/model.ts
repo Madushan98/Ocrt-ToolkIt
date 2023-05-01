@@ -13,3 +13,14 @@ export interface uploadeChanger{
 export interface closeButton{
     closeClick:()=>void
 }
+
+export interface nextButton{
+    nextOnClick:()=>void
+    rotate:string
+}
+
+export interface TextArea{
+    textAreaResult : string
+}
+
+
