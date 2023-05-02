@@ -8,8 +8,8 @@ import { FileContext, ThresholdContext } from '../app/context';
 
 function Home() {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-    const [th1, setTh1] = useState<number | null>(0);
-    const [th2, setTh2] = useState<number | null>(255);
+    const [th1, setTh1] = useState<number | null>(210);
+    const [th2, setTh2] = useState<number | null>(230);
 
     return (
         <div className="container mx-auto">

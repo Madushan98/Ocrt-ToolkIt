@@ -107,9 +107,8 @@ const FilePreview = () => {
         if(!selectimage)return; 
         setIsUploading(true); 
         var data: Map<string,number> = new Map(); 
-        thresholdContext?.setTh1(250);
-        data.set('th1', thresholdContext?.th1 || 220);
-        data.set('th2', thresholdContext?.th2 || 220);
+        data.set('th1', thresholdContext?.th1 || 210);
+        data.set('th2', thresholdContext?.th2 || 230);
     
         const result = await getDataService(option,selectimage,data);
         console.log(option);
