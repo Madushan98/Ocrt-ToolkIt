@@ -11,7 +11,7 @@ import 'rc-slider/assets/index.css';
 const FileUpload = ({ onOptionChange, onUpload }: uploadeChanger) => {
   const fileContext = useContext(FileContext)
   const thresholdContext = useContext(ThresholdContext)
-  const [selectedOption, setSelectedOption] = useState<Options>(Options.get_result);
+  const [selectedOption, setSelectedOption] = useState<Options>(Options.upload);
 
 
   useEffect(() => {

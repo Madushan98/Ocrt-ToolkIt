@@ -35,6 +35,7 @@ export const preProcessDataService = async (option: Options, data: Map<string, n
     if (option === Options.noise_remove && data !== null) {
         url += `/${data.get('th1')}/${data.get('th2')}`;
     }
+    console.log(endpoint)
     const result = await fetch(url)
         .then((response) => response.json()) as PreProcessDataResult;
     return result;
@@ -49,6 +50,8 @@ const getService = (image: any, option: Options,data: Map<string, number> | null
         case Options.dilation:
             return preProcessDataService(option);
         case Options.erosion:
+            return preProcessDataService(option);
+        case Options.skew:
             return preProcessDataService(option);
         case "upload":
             return uploadDataService(option, image);
@@ -70,6 +73,8 @@ const getEndpoint = (option: Options) => {
             return "pre-process/dilation";
         case Options.erosion:
             return "pre-process/erosion";
+        case Options.skew:
+            return "pre-process/skew";
         default:
             return "get-result";
     }

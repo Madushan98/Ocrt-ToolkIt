@@ -4,4 +4,5 @@ export enum Options {
   noise_remove = 'noise-remove',
   dilation = 'dilation',
   erosion = 'erosion',
+  skew = 'skew'
 }

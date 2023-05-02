@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from typing import List
 from fastapi.responses import JSONResponse
 from internal.pre_process import noise_remove_total, dilate_total, erote_total
+from internal.skew_process import deskew
 
 router = APIRouter()
 BASE_DIR = Path(__file__).resolve(strict=True).parent
@@ -48,6 +49,17 @@ async def erosion():
         os.getcwd()), resultPath, "erosion.png")
     erote_total(file_path, save_path)
     url = f"http://localhost:8000/static/results/erosion.png"
+
+    # Return a JSON response with the image URL
+    return JSONResponse({"url": url})
+
+
+@router.get("/pre-process/skew")
+async def skew():
+    save_path = os.path.join(os.path.dirname(
+        os.getcwd()), resultPath, "skew.png")
+    deskew(file_path, save_path)
+    url = f"http://localhost:8000/static/results/skew.png"
 
     # Return a JSON response with the image URL
     return JSONResponse({"url": url})

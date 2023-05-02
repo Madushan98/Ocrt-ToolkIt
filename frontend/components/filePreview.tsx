@@ -18,7 +18,7 @@ const FilePreview = () => {
     const [hovered, setHovered] = useState(false);
     const [selectimage, setSelectImage] = useState<File|null>(null);
     const [isDragging, setIsDragging] = useState(false);
-    const [option, setOption] = useState<Options>(Options.get_result);
+    const [option, setOption] = useState<Options>(Options.upload);
     const [textAreResult,setTextAreaResult] = useState<string>("");
     const [isUploading,setIsUploading] = useState<boolean>(false);
     const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
@@ -111,12 +111,12 @@ const FilePreview = () => {
         data.set('th2', thresholdContext?.th2 || 230);
     
         const result = await getDataService(option,selectimage,data);
-        console.log(option);
         if(option === Options.get_result){
             setTextAreaResult(result.Tesseract);
-            console.log("asdasd"+option);
         }else{
-            handlePreProcessImage(result.url);
+            if(option != Options.upload){
+             handlePreProcessImage(result.url);
+            }
         }
         setIsUploading(false);     
     }
