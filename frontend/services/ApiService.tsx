@@ -53,6 +53,8 @@ const getService = (image: any, option: Options,data: Map<string, number> | null
             return preProcessDataService(option);
         case Options.skew:
             return preProcessDataService(option);
+        case Options.border_remove:
+            return preProcessDataService(option);
         case "upload":
             return uploadDataService(option, image);
         default:
@@ -75,6 +77,8 @@ const getEndpoint = (option: Options) => {
             return "pre-process/erosion";
         case Options.skew:
             return "pre-process/skew";
+        case Options.border_remove:
+            return "pre-process/border-remove";
         default:
             return "get-result";
     }
