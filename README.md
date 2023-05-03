@@ -1,4 +1,4 @@
-# OCR Based PDF Reader
+# OCR Toolkit
 
 A software application that utilizes Optical Character Recognition (OCR) technology to recognize text in scanned PDF documents and make it searchable and editable.
 
