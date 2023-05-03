@@ -61,7 +61,7 @@ async def getResult(file: UploadFile = File(...)):
         pass
     else:
         os.mkdir(uploaded_path)
-    
+
     filename = f"{uploaded_path}/page1.png"
 
     with open(filename, "wb") as f:
@@ -104,8 +104,9 @@ async def uploadImage(file: UploadFile = File(...)):
         pass
     else:
         os.mkdir(uploaded_path)
-    filename = f"uploads/upload.{file.filename.split('.')[-1]}"
+    filename = f"{uploaded_path}/page1.png"
     with open(filename, "wb") as f:
+        print(file.file)
         shutil.copyfileobj(file.file, f)
 
 
