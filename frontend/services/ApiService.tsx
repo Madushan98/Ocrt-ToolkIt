@@ -41,6 +41,7 @@ export const preProcessDataService = async (option: Options, data: Map<string, n
     return result;
 }
 
+
 const getService = (image: any, option: Options,data: Map<string, number> | null = null) => {
     switch (option) {
         case Options.get_result:
@@ -54,8 +55,6 @@ const getService = (image: any, option: Options,data: Map<string, number> | null
         case Options.skew:
             return preProcessDataService(option);
         case Options.border_remove:
-            return preProcessDataService(option);
-        case Options.add_border:
             return preProcessDataService(option);
         case "upload":
             return uploadDataService(option, image);
