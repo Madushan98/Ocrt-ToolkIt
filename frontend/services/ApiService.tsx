@@ -41,22 +41,6 @@ export const preProcessDataService = async (option: Options, data: Map<string, n
     return result;
 }
 
-export const preProcessDataService1 = async (option: Options,image:File, data: Map<string, number> | null = null): Promise<PreProcessDataResult> => {
-    const endpoint = getEndpoint(option);
-    const formData = new FormData();
-    formData.append('file', image);
-    const options = {
-        method: 'POST',
-        body: formData,
-    };
-    let url = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
-    if (option === Options.noise_remove && data !== null) {
-        url += `/${data.get('th1')}/${data.get('th2')}`;
-    }
-    const result = await fetch(url,options)
-        .then((response) => response.json()) as PreProcessDataResult;
-    return result;
-}
 
 const getService = (image: any, option: Options,data: Map<string, number> | null = null) => {
     switch (option) {
@@ -69,7 +53,7 @@ const getService = (image: any, option: Options,data: Map<string, number> | null
         case Options.erosion:
             return preProcessDataService(option);
         case Options.skew:
-            return preProcessDataService1(option,image);
+            return preProcessDataService(option);
         case Options.border_remove:
             return preProcessDataService(option);
         case Options.border_remove:

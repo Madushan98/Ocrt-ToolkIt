@@ -1,5 +1,5 @@
 'use client'
-import { useState, useContext} from 'react'
+import { useState, useContext, useEffect} from 'react'
 import { FileContext, ThresholdContext } from '../app/context'
 import FileUpload from './fileUpload'
 import Modal from './Modal'
@@ -23,7 +23,10 @@ const FilePreview = () => {
     const [isUploading,setIsUploading] = useState<boolean>(false);
     const [preProcessImageUrl,setPreProcessImageUrl] = useState<string| null>(null);
  
-
+    useEffect(() => {
+        if(!selectimage)return; 
+        getDataService(Options.upload,selectimage,null)
+      }, [selectimage]);
 
     const handleHover = () => {
         setHovered(true);
@@ -72,7 +75,6 @@ const FilePreview = () => {
     };
 
     const handlePreProcessImage = async (imageUrl:string)=>{
-        console.log(imageUrl);
         setPreProcessImageUrl(imageUrl);
     }
 
