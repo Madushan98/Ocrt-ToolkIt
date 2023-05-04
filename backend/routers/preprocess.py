@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from internal.pre_process import noise_remove_total, dilate_total, erote_total
 from internal.skew_process import deskew
 from internal.border_removal import remove_borders_total
+from internal.add_border import add_border_total
 
 
 router = APIRouter()
@@ -72,6 +73,16 @@ async def removeBorder():
         os.getcwd()), resultPath, "border-remove.png")
     remove_borders_total(file_path, save_path)
     url = f"http://localhost:8000/static/results/border-remove.png"
+
+    # Return a JSON response with the image URL
+    return JSONResponse({"url": url})
+
+@router.get("/pre-process/add-border")
+async def addBorder():
+    save_path = os.path.join(os.path.dirname(
+        os.getcwd()), resultPath, "add-border.png")
+    add_border_total(file_path, save_path)
+    url = f"http://localhost:8000/static/results/add-border.png"
 
     # Return a JSON response with the image URL
     return JSONResponse({"url": url})
