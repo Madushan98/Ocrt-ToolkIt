@@ -5,6 +5,7 @@ export enum Options {
   dilation = 'dilation',
   erosion = 'erosion',
   skew = 'skew',
-  border_remove='border-remove'
+  border_remove='border-remove',
+  add_border='add-border'
 
 }
