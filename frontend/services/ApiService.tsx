@@ -56,8 +56,6 @@ const getService = (image: any, option: Options,data: Map<string, number> | null
             return preProcessDataService(option);
         case Options.border_remove:
             return preProcessDataService(option);
-        case Options.border_remove:
-            return preProcessDataService(option);
         case "upload":
             return uploadDataService(option, image);
         default:
@@ -82,6 +80,8 @@ const getEndpoint = (option: Options) => {
             return "pre-process/skew";
         case Options.border_remove:
             return "pre-process/border-remove";
+        case Options.add_border:
+            return "pre-process/add-border";
         default:
             return "get-result";
     }
