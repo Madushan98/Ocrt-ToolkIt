@@ -106,6 +106,7 @@ async def uploadImage(file: UploadFile = File(...)):
         os.mkdir(uploaded_path)
     filename = f"{uploaded_path}/page1.png"
     with open(filename, "wb") as f:
+        print(file.file)
         shutil.copyfileobj(file.file, f)
 
 
