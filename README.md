@@ -1,6 +1,6 @@
 # OCR Toolkit
 
-A software application that utilizes Optical Character Recognition (OCR) technology to recognize text in scanned PDF documents and make it searchable and editable.
+A software application that utilizes Optical Character Recognition (OCR) technology to recognize text and add advanced pre-processing techniques to extract text from images with high accuracy. Our tool employs techniques such as skewing, rotating, and noise cancelling to enhance images before performing OCR, resulting in reliable and precise text extraction.
 
 ## Features
 
